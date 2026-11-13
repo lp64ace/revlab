@@ -62,16 +62,20 @@ void GenericPhysicsWorld::update(float dt) {
 
 				float rhs = 0.0f;
 				for (size_t subbody = 0; subbody < c->bodies; subbody++) {
-					RigidBody *rb = c->body[subbody];
+					const RigidBody *rb = c->body[subbody];
 					PhysicsRigidBodyStore *store = get_rigid_body_store(rb);
+					RigidBody *erb = store->shallow_copy;
+
+					const float inv_M = erb->mass > 0.0f ? 1.0f / erb->mass : 0.0f;
+					const float inv_I = erb->inertia > 0.0f ? 1.0f / erb->inertia : 0.0f;
 
 					assert(store);
 
-					float3 v(rb->velocity, rb->v_theta);
+					float3 v(erb->velocity, erb->v_theta);
 					float3 Jr = output.J[subbody][subconstraint];
 					float3 dJr = output.dJ[subbody][subconstraint];
 					float3 Fext = float3(store->force, store->torque);
-					float3 invM = float3(1.0f / rb->mass, 1.0f / rb->mass, 1.0f / rb->inertia);
+					float3 invM = float3(inv_M, inv_M, inv_I);
 
 					row.store[subbody] = store;
 					row.J[subbody] = Jr;
@@ -85,20 +89,20 @@ void GenericPhysicsWorld::update(float dt) {
 		}
 
 		/* A = J M^-1 J^T */
-		for (size_t row = 0; row < total_constraints; row++) {
-			for (size_t col = row; col < total_constraints; col++) {
+		for (size_t i = 0; i < total_constraints; i++) {
+			for (size_t j = i; j < total_constraints; j++) {
 				float sum = 0.0f;
-				for (size_t k = 0; k < rows[row].bodies; k++) {
-					for (size_t l = 0; l < rows[col].bodies; l++) {
-						if (rows[row].store[k] == rows[col].store[l]) {
-							sum += dot(rows[row].J[k] * rows[row].invM[k], rows[col].J[l]);
+				for (size_t k = 0; k < rows[i].bodies; k++) {
+					for (size_t l = 0; l < rows[j].bodies; l++) {
+						if (rows[i].store[k] == rows[j].store[l]) {
+							sum += dot(rows[i].J[k] * rows[i].invM[k], rows[j].J[l]);
 						}
 					}
 				}
-				A[row][col] = sum;
-				A[col][row] = sum;
+				A[i][j] = sum;
+				A[j][i] = sum;
 			}
-			A[row][row] += 1e-6f;
+			A[i][i] += 1e-6f;
 		}
 
 		std::vector<float> x(total_constraints, 0.0f);

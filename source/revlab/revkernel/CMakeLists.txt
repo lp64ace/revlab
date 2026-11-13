@@ -24,8 +24,10 @@ set(SRC
 	KER_camshaft.hh
 	KER_constraint.hh
 	KER_constraint_fixed_position.hh
+	KER_constraint_line.hh
 	KER_constraint_link.hh
 	KER_crankshaft.hh
+	KER_cylinder_bank.hh
 	KER_differential_equation_euler_solver.hh
 	KER_differential_equation_rk4_solver.hh
 	KER_differential_equation_solver.hh
@@ -41,8 +43,10 @@ set(SRC
 	intern/camshaft.cc
 	intern/constraint.cc
 	intern/constraint_fixed_position.cc
+	intern/constraint_line.cc
 	intern/constraint_link.cc
 	intern/crankshaft.cc
+	intern/cylinder_bank.cc
 	intern/differential_equation_euler_solver.cc
 	intern/differential_equation_rk4_solver.cc
 	intern/differential_equation_solver.cc

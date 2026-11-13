@@ -18,7 +18,7 @@ Rod::Rod(PhysicsWorld *world, const RodDescr &descr) : RigidBody(float2(0.0f), 0
 		/**
 		 * There is a link between the rod and the piston.
 		 * We consider the link to be a very stiff spring of length zero.
-		 * The stiffness is 5k neuton (equal to ~510kg) and a damping factor of 100 neuton as friction force.
+		 * The stiffness is 5k neuton (equal to ~510kg) and a damping factor of 200 neuton as friction force.
 		 */
 		world->add_constraint(new LinkConstraint(
 								  /** The first point of contact of the "spring"/"link" is the small end of the rod. */
@@ -28,12 +28,12 @@ Rod::Rod(PhysicsWorld *world, const RodDescr &descr) : RigidBody(float2(0.0f), 0
 								  piston,
 								  piston->wrist_pin_local(),
 								  5e3f,
-								  1e2f),
+								  2e2f),
 							  ePhysicsWorld_Flag::Owned);
 		/**
 		 * There is a link between the rod and the journal on the crankshaft.
 		 * We consider the link to be a very stiff spring of length zero.
-		 * The stiffness is 5k neuton (equal to ~510kg) and a damping factor of 100 neuton as friction force.
+		 * The stiffness is 5k neuton (equal to ~510kg) and a damping factor of 200 neuton as friction force.
 		 */
 		world->add_constraint(new LinkConstraint(
 								  /** The first point of contact of the "spring"/"link" is the big end of the rod. */
@@ -43,7 +43,7 @@ Rod::Rod(PhysicsWorld *world, const RodDescr &descr) : RigidBody(float2(0.0f), 0
 								  crankshaft,
 								  crankshaft->journal_local(journal),
 								  5e3f,
-								  1e2f),
+								  2e2f),
 							  ePhysicsWorld_Flag::Owned);
 	}
 }

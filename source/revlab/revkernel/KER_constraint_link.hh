@@ -8,7 +8,7 @@
 struct LinkConstraint;
 
 /* -------------------------------------------------------------------- */
-/** \name Fixed Position Constraint Structure/Type
+/** \name Link Constraint Structure/Type
  * \{ */
 
 struct LinkConstraint : public Constraint {

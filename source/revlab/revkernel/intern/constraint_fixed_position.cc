@@ -30,7 +30,7 @@ void FixedPositionConstraint::apply(PhysicsWorld *world, ConstraintMatrices *r_o
 
 	/** Transform the local position to global coordinates. */
 	c.x = cosf(body[0]->theta) * local.x - sinf(body[0]->theta) * local.y + body[0]->position.x;
-	c.x = sinf(body[0]->theta) * local.x + cosf(body[0]->theta) * local.y + body[0]->position.y;
+	c.y = sinf(body[0]->theta) * local.x + cosf(body[0]->theta) * local.y + body[0]->position.y;
 
 	/**
 	 * The constraint equation/function we are trying to solve here is the following;

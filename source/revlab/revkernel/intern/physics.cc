@@ -167,7 +167,7 @@ PhysicsRigidBodyStore *PhysicsWorld::add_rigid_body(RigidBody *body, ePhysicsWor
 	return &rigid_bodies[rigid_bodies.size() - 1];
 }
 
-PhysicsRigidBodyStore *PhysicsWorld::get_rigid_body_store(RigidBody *body) {
+PhysicsRigidBodyStore *PhysicsWorld::get_rigid_body_store(const RigidBody *body) {
 	for (std::vector<PhysicsRigidBodyStore>::iterator i = rigid_bodies.begin(); i != rigid_bodies.end(); i++) {
 		if (i->body == body) {
 			PhysicsRigidBodyStore &store = *i;

@@ -66,7 +66,7 @@ struct PhysicsWorld {
 
 	PhysicsRigidBodyStore *add_rigid_body(RigidBody *body, ePhysicsWorld_Flag flag = ePhysicsWorld_Flag::None);
 	/** Used to update the sate of the rigid body between frames. */
-	PhysicsRigidBodyStore *get_rigid_body_store(RigidBody *body);
+	PhysicsRigidBodyStore *get_rigid_body_store(const RigidBody *body);
 	/**
 	 * This function might return NULL if the specified body does not exist within this #PhysicsWorld or
 	 * if the ePhysicsWorld_Flag::Owned was specified, in which case the #RigidBody is also freed.
