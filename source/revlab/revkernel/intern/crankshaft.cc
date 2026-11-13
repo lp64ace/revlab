@@ -7,7 +7,7 @@ Crankshaft::Crankshaft(PhysicsWorld *world, const CrankshaftDescr &descr) : Rigi
 		world->add_rigid_body(this, ePhysicsWorld_Flag::Owned);
 		/**
 		 * The center of the crankshaft (0, 0) is considered to be held stable in its starting position (this->position) using a force
-		 * of 5k neuton (equal to ~510kg) and a damping factor of 10 neuton as friction force.
+		 * of 5k neuton (equal to ~510kg) and a damping factor of 100 neuton as friction force.
 		 */
 		world->add_constraint(new FixedPositionConstraint(this, float2(0.0f, 0.0f), this->position, 5e3f, 1e2f), ePhysicsWorld_Flag::Owned);
 	}

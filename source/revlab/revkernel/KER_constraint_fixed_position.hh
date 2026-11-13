@@ -15,7 +15,7 @@ struct FixedPositionConstraint : public Constraint {
 	FixedPositionConstraint(RigidBody *body, float2 local, float2 global, float stiffness, float damping);
 	virtual ~FixedPositionConstraint();
 
-	void apply(PhysicsWorld *world, float dt, ConstraintMatrices *r_output);
+	void apply(PhysicsWorld *world, ConstraintMatrices *r_output);
 
 	float2 global;
 	float2 local;

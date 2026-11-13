@@ -12,7 +12,7 @@ LinkConstraint::LinkConstraint(RigidBody *body1, float2 local1, RigidBody *body2
 LinkConstraint::~LinkConstraint() {
 }
 
-void LinkConstraint::apply(PhysicsWorld *world, float dt, ConstraintMatrices *r_output) {
+void LinkConstraint::apply(PhysicsWorld *world, ConstraintMatrices *r_output) {
 	/**
 	 * Convert the local positions to global world positions using the rotation angle from the RigidBody.
 	 * The transformation matrix would be;

@@ -12,7 +12,7 @@ struct ForceGenerator {
 	ForceGenerator();
 	virtual ~ForceGenerator();
 
-	virtual void apply(PhysicsWorld *world, float dt) = 0;
+	virtual void apply(PhysicsWorld *world) = 0;
 };
 
 /** \} */

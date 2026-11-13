@@ -6,7 +6,7 @@ LinearEquationSolver::LinearEquationSolver(bool supports_limits) : supports_limi
 LinearEquationSolver::~LinearEquationSolver() {
 }
 
-bool LinearEquationSolver::solve() {
+bool LinearEquationSolver::solve(const std::vector<std::vector<float>> &A, const std::vector<float> &b, std::vector<float> &x) {
 	return false;
 }
 

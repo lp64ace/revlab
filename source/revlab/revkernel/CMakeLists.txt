@@ -27,6 +27,7 @@ set(SRC
 	KER_constraint_link.hh
 	KER_crankshaft.hh
 	KER_differential_equation_euler_solver.hh
+	KER_differential_equation_rk4_solver.hh
 	KER_differential_equation_solver.hh
 	KER_force_generator.hh
 	KER_linear_equation_gauss_solver.hh
@@ -43,7 +44,9 @@ set(SRC
 	intern/constraint_link.cc
 	intern/crankshaft.cc
 	intern/differential_equation_euler_solver.cc
+	intern/differential_equation_rk4_solver.cc
 	intern/differential_equation_solver.cc
+	intern/linear_equation_gauss_solver.cc
 	intern/linear_equation_solver.cc
 	intern/physics.cc
 	intern/physics_generic.cc

@@ -15,7 +15,7 @@ struct LinkConstraint : public Constraint {
 	LinkConstraint(RigidBody *body1, float2 local1, RigidBody *body2, float2 local2, float stiffness, float damping);
 	virtual ~LinkConstraint();
 
-	void apply(PhysicsWorld *world, float dt, ConstraintMatrices *r_output);
+	void apply(PhysicsWorld *world, ConstraintMatrices *r_output);
 
 	float2 local[2];
 	float stiffness;

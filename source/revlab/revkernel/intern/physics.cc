@@ -21,10 +21,8 @@ static void update_ridig_body_store(PhysicsRigidBodyStore *store) {
 
 	store->shallow_copy->position = store->body->position;
 	store->shallow_copy->velocity = store->body->velocity;
-	store->shallow_copy->acceleration = store->body->acceleration;
 	store->shallow_copy->theta = store->body->theta;
 	store->shallow_copy->v_theta = store->body->v_theta;
-	store->shallow_copy->a_theta = store->body->a_theta;
 
 	store->shallow_copy->mass = store->body->mass;
 	store->shallow_copy->inertia = store->body->inertia;

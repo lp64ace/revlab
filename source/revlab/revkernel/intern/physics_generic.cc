@@ -18,38 +18,8 @@ GenericPhysicsWorld::GenericPhysicsWorld(DifferentialEquationSolver *de_solver, 
 }
 
 GenericPhysicsWorld::~GenericPhysicsWorld() {
-}
-
-/* Dense Gaussian elimination with partial pivoting; solves A x = b in place (x returned in b). */
-static bool solve_dense(std::vector<std::vector<float>> &A, std::vector<float> &b) {
-	const size_t n = b.size();
-	for (size_t col = 0; col < n; col++) {
-		size_t pivot = col;
-		for (size_t r = col + 1; r < n; r++) {
-			if (fabsf(A[r][col]) > fabsf(A[pivot][col]))
-				pivot = r;
-		}
-		if (fabsf(A[pivot][col]) < 1e-12f)
-			return false; /* singular */
-		std::swap(A[pivot], A[col]);
-		std::swap(b[pivot], b[col]);
-
-		for (size_t r = col + 1; r < n; r++) {
-			const float f = A[r][col] / A[col][col];
-			if (f == 0.0f)
-				continue;
-			for (size_t c = col; c < n; c++)
-				A[r][c] -= f * A[col][c];
-			b[r] -= f * b[col];
-		}
-	}
-	for (size_t i = n; i-- > 0;) {
-		float sum = b[i];
-		for (size_t c = i + 1; c < n; c++)
-			sum -= A[i][c] * b[c];
-		b[i] = sum / A[i][i];
-	}
-	return true;
+	delete this->differential_equation_solver;
+	delete this->linear_equation_solver;
 }
 
 void GenericPhysicsWorld::update(float dt) {
@@ -61,7 +31,7 @@ void GenericPhysicsWorld::update(float dt) {
 		// process forces
 		for (std::vector<PhysicsForceGeneratorStore>::iterator itr = force_generators.begin(); itr != force_generators.end(); itr++) {
 			ForceGenerator *fg = itr->force_generator;
-			fg->apply(this, dt);
+			fg->apply(this);
 		}
 
 		// process constraints
@@ -84,7 +54,7 @@ void GenericPhysicsWorld::update(float dt) {
 			Constraint *c = itr->constraint;
 
 			KER_constraint_output_none(&output);
-			c->apply(this, dt, &output);
+			c->apply(this, &output);
 
 			for (size_t subconstraint = 0; subconstraint < c->constraints; subconstraint++, index++) {
 				ConstraintRow &row = rows[index];
@@ -131,14 +101,22 @@ void GenericPhysicsWorld::update(float dt) {
 			A[row][row] += 1e-6f;
 		}
 
-		if (!solve_dense(A, b)) {
-			break;
+		std::vector<float> x(total_constraints, 0.0f);
+
+		bool solved = false;
+		if (linear_equation_solver->supports_limits) {
+			// solved |= linear_equation_solver->solve_with_limits(...);
 		}
+		if (!solved) {
+			solved |= linear_equation_solver->solve(A, b, x);
+		}
+
+		assert(solved);
 
 		for (size_t constraint = 0; constraint < total_constraints; constraint++) {
 			for (size_t subbody = 0; subbody < rows[constraint].bodies; subbody++) {
 				PhysicsRigidBodyStore *store = rows[constraint].store[subbody];
-				const float3 o = rows[constraint].J[subbody] * b[constraint];
+				const float3 o = rows[constraint].J[subbody] * x[constraint];
 				store->force.x += o.x;
 				store->force.y += o.y;
 				store->torque += o.z;

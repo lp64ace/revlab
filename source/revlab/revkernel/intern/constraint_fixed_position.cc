@@ -13,7 +13,7 @@ FixedPositionConstraint::FixedPositionConstraint(RigidBody *body, float2 local, 
 FixedPositionConstraint::~FixedPositionConstraint() {
 }
 
-void FixedPositionConstraint::apply(PhysicsWorld *world, float dt, ConstraintMatrices *r_output) {
+void FixedPositionConstraint::apply(PhysicsWorld *world, ConstraintMatrices *r_output) {
 	/**
 	 * Convert the local anchor position to global world position using the rotation angle from the RigidBody.
 	 * The transformation matrix would be;

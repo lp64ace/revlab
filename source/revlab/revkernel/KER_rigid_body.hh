@@ -25,11 +25,6 @@ struct RigidBody {
 	 */
 	float2 velocity = float2(0.0f, 0.0f);
 	/**
-	 * \brief The current translation acceleration of the rigid body.
-	 * This value is measured in (m/s^2) meters per second squared.
-	 */
-	float2 acceleration = float2(0.0f, 0.0f);
-	/**
 	 * \brief The current angle of the rigid body.
 	 * This value is measured in (rad) radians.
 	 */
@@ -39,11 +34,6 @@ struct RigidBody {
 	 * This value is measured in (rad/s) radians per second.
 	 */
 	float v_theta = 0.0f;
-	/**
-	 * \brief The current rotational accelration (in the Z axis) of the rigid body.
-	 * This value is measured in (rad/s^2) radians per second squared.
-	 */
-	float a_theta = 0.0f;
 	/** Mass tells you how hard it is to speed up or slow down a sliding box (F = ma). */
 	float mass = 1.0f;
 	/**
